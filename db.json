@@ -1,0 +1,40 @@
+{
+  "productList": [
+    {
+      "nom": "Imprimante 3D",
+      "categorie": "Informatique",
+      "etat": "Neuf",
+      "prix": "30000 Fr CFA",
+      "comment": "Pour tous les services",
+      "date": "2022-10-25T00:00:00.000Z",
+      "id": 1
+    },
+    {
+      "nom": "Pariatur Sed id sin",
+      "categorie": "two",
+      "etat": "2e main",
+      "prix": "1234560000 Fr CFA",
+      "comment": "Voluptas quisquam et",
+      "date": "-002021-02-08T00:16:08.000Z",
+      "id": 2
+    },
+    {
+      "nom": "Apple Watch",
+      "categorie": "one",
+      "etat": "Neuf",
+      "prix": "25000",
+      "comment": "Parfaite pour vous suivre partout",
+      "date": "2022-10-25T00:00:00.000Z",
+      "id": 3
+    },
+    {
+      "nom": "Samsung A3",
+      "categorie": "Électronique",
+      "etat": "Réconditionné",
+      "prix": "35000",
+      "comment": "Parfait et au point comme d'habitude",
+      "date": "2022-10-25T00:00:00.000Z",
+      "id": 4
+    }
+  ]
+}
