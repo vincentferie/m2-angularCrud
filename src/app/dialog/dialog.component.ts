@@ -9,8 +9,10 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./dialog.component.scss'],
 })
 export class DialogComponent implements OnInit {
+
   freshnessList = ['Neuf', '2e main', 'Réconditionné'];
 
+  /* Form */
   productForm!: FormGroup;
   actionBtn: string = 'Enregistrer';
   constructor(
@@ -30,6 +32,7 @@ export class DialogComponent implements OnInit {
       date: ['', Validators.required],
     });
 
+    /* If the editData is not empty, it means that the user wants to edit the product */
     if (this.editData) {
       this.actionBtn = 'Mettre à jour';
       this.productForm.controls['nom'].setValue(this.editData.nom);
@@ -38,26 +41,32 @@ export class DialogComponent implements OnInit {
       this.productForm.controls['prix'].setValue(this.editData.prix);
       this.productForm.controls['comment'].setValue(this.editData.comment);
       this.productForm.controls['date'].setValue(this.editData.date);
-      // this.productForm.controls['action'].setValue(this.editData.action);
     }
   }
 
+  /* POST a new product to the database */
   addProduct() {
+    /* If the editData is empty */
    if(!this.editData){
      if (this.productForm.valid) {
+      /* Send the data to the API */
        this.api.postProduct(this.productForm.value).subscribe({
          next: (res) => {
            alert('Produit ajouté avec succès');
+           /* Reset the form */
            this.productForm.reset();
+           /* Close the dialog */
            this.dialofRef.close();
          },
        });
      }
    } else {
+    /* If the editData is not empty, it means that the user wants to edit the product */
       this.updateProduct()
    }
   }
 
+  /*UPDATE a product in the database */
   updateProduct(){
     this.api.putProduct(this.productForm.value,this.editData.id)
     .subscribe({

@@ -13,6 +13,7 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class AppComponent implements OnInit {
 
+  /** Columns displayed in the table. Columns can be added, removed, or reordered. */
   displayedColumns: string[] = [
     'nom',
     'categorie',
@@ -22,10 +23,13 @@ export class AppComponent implements OnInit {
     'date',
     'action',
   ];
+  /* Table */
   dataSource!: MatTableDataSource<any>;
 
+  /* Paginator */
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+
 
   constructor(private dialog: MatDialog, private api: ApiService) {}
 
@@ -33,6 +37,7 @@ export class AppComponent implements OnInit {
     this.getAllProducts();
   }
 
+  /* OPEN the dialog mat. for add product */
   openDialog() {
     this.dialog
       .open(DialogComponent, {
@@ -46,35 +51,52 @@ export class AppComponent implements OnInit {
       });
   }
 
+  /* GET all products from the database */
   getAllProducts() {
     this.api.getProduct().subscribe({
+      /* If the request is successful */
       next: (res) => {
+        /* Assign the data to the data source for the table to render */
         this.dataSource = new MatTableDataSource(res);
+        /* Pagination */
         this.dataSource.paginator = this.paginator;
+        /* Sort */
         this.dataSource.sort = this.sort;
       },
+      /* If the request fails */
       error: (err) => {
+        /* Log the error */
         alert('Erreur lors de la récupération des données');
       },
     });
   }
+
+  /* EDIT a product from the database */
   editProduct(row: any) {
+    /* Open the dialog mat. for edit product */
     this.dialog.open(DialogComponent, {
         width: '30%',
         data: row,
     }).afterClosed()
+    /* If the dialog mat. is closed */
       .subscribe((val) => {
+        /* If the value is 'update' */
         if (val === 'update') {
+          /* Return on table which contains all products */
           this.getAllProducts();
         }
       });
   }
 
 
+  /* DELETE a product from the database */
   deleteProduct(id:number){
+    /* Open a dialog mat. for confirmation */
     this.api.deleteProduct(id)
+    /* If the request is successful */
     .subscribe({
       next:(res)=>{
+        /* Return on table which contains all products */
         alert("Produit supprimé avec succès");
         this.getAllProducts();
       },
